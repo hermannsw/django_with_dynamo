@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  postgresql:
+    image: postgres:latest
+    container_name: postgresql
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres/init:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_DB: django_with_dynamo_db
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    hostname: postgres
+    restart: always
+    user: root
+
+  dynamodb:
+    build: ./dynamodb
+    volumes:
+      - dynamodb_data:/home/dynamodblocal/data
+    ports:
+      - 18000:8000
+    command: -jar DynamoDBLocal.jar -dbPath ./data -sharedDb
+
+volumes:
+  dynamodb_data:
