@@ -9,6 +9,7 @@ verify_ssl = true
 django = "==2.1.2"
 django-environ = "*"
 psycopg2-binary = "==2.7.4"
+pynamodb = "*"
 
 [requires]
 python_version = "3.6"
